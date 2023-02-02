@@ -12,46 +12,30 @@ use Illuminate\Database\Events\QueryExecuted;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register(): void
-    {
-        //
-    }
-
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
     public function boot(): void
     {
         Model::shouldBeStrict(!app()->isProduction());
 
         if(app()->isProduction()) {
-            DB::whenQueryingForLongerThan(CarbonInterval::seconds(5), function (Connection $connection, QueryExecuted $event) {
-                logger()
-                    ->channel('telegram')
-                    ->debug('whenQueryingForLongerThan: ' . $connection->totalQueryDuration());
-            });
-
+/*            DB::whenQueryingForLongerThan(
+                CarbonInterval::seconds(5),
+                function (Connection $connection) {
+                    logger()
+                        ->channel('telegram')
+                        ->debug('whenQueryingForLongerThan: ' . $connection->totalQueryDuration());
+                }
+            );
+*/
             DB::listen(function ($query) {
-
                 if($query->time > 100) {
                     logger()
                         ->channel('telegram')
-                        ->debug('whenQueryingForLongerThan: ' . $query->sql, $query->binding);
+                        ->debug('query longer than 1ms: ' . $query->sql, $query->binding);
 
                 }
             });
 
-            $kernel = app(Kernel::class);
-
-
-            $kernel->whenRequestLifecycleIsLongerThan(
+            app(Kernel::class)->whenRequestLifecycleIsLongerThan(
                 CarbonInterval::seconds(4),
                 function () {
                     logger()

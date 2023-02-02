@@ -6,9 +6,9 @@ namespace App\Services\Telegram\Exceptions;
 
 use Exception;
 
-class TelegramBotException extends Exception
+class TelegramBotApiException extends Exception
 {
-    public function report()
-    {
-    }
+//    public function report()
+//    {
+//    }
 }
