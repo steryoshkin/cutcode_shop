@@ -16,10 +16,16 @@ class ProductFactory extends Factory
         return [
             'title' => ucfirst($this->faker->words(2, true)),
             'brand_id' => Brand::query()->inRandomOrder()->value('id'),
-            'thumbnail' => $this->faker->file(
-                base_path('tests/Fixtures/images/products'),
-                storage_path('app/public/images/products'),
-                false
+//            'thumbnail' => $this->faker->file(
+//                base_path('tests/Fixtures/images/products'),
+//                storage_path('app/public/images/products'),
+//                false
+//            ),
+//            'thumbnail' => $this->faker->image(
+//                storage_path('app/public/images/products'),
+//            ),
+            'thumbnail' => $this->faker->picsum(
+                'images/products',
             ),
             'price' => $this->faker->numberBetween(1000, 100000),
         ];
