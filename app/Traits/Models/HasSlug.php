@@ -12,8 +12,6 @@ use App\Helpers\Counter;
 
 trait HasSlug
 {
-    protected $count = 0;
-
     protected static function bootHasSlug()
     {
         static::creating(function(Model $item) {
@@ -29,7 +27,7 @@ trait HasSlug
         return 'title';
     }
 
-    public static function slugSuffix(string $slug): string
+    public static function slugSuffixAll(string $slug): string
     {
         $slug = str($slug)->slug();
 
@@ -42,6 +40,18 @@ trait HasSlug
             ->where('slug', 'LIKE', $slug.'%')
             ->count()
         + Product::query()
+            ->select('slug')
+            ->where('slug', 'LIKE', $slug.'%')
+            ->count();
+
+        return $result == 0 ? '' : '-'.$result;
+    }
+
+    public static function slugSuffix(string $slug): string
+    {
+        $slug = str($slug)->slug();
+
+        $result = static::query()
             ->select('slug')
             ->where('slug', 'LIKE', $slug.'%')
             ->count();
