@@ -17,7 +17,7 @@ trait HasSlug
         static::creating(function(Model $item) {
             $item->slug = $item->slug
                 ?? str($item->{self::slugFrom()})
-                    ->append(self::slugSuffix($item->{self::slugFrom()}))
+                    ->append(self::generateSlug($item->{self::slugFrom()}))
                     ->slug();
         });
     }
@@ -27,6 +27,22 @@ trait HasSlug
         return 'title';
     }
 
+    public static function generateSlug(string $slug): string
+    {
+        $i = 0;
+        $newSlug = $slug;
+
+        while (static::query()
+            ->select('slug')
+            ->where('slug', str($newSlug)->slug())
+            ->first())
+        {
+            $newSlug = $slug.'-'.$i++;
+        }
+
+        return $i > 0 ? '-'.$i : '';
+    }
+/*
     public static function slugSuffixAll(string $slug): string
     {
         $slug = str($slug)->slug();
@@ -57,5 +73,5 @@ trait HasSlug
             ->count();
 
         return $result == 0 ? '' : '-'.$result;
-    }
+    }*/
 }

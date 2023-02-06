@@ -25,7 +25,7 @@ final class FakerImageProvider extends Base
                     $filepath,
                     $file->body()
                 );
-                dump($filepath);
+//                dump($filepath);
 //                return '/storage/app/public/' . $filepath;
                 return $filepath;
             }
