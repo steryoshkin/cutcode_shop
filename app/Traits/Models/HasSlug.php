@@ -33,6 +33,7 @@ trait HasSlug
         $newSlug = $slug;
 
         while (static::query()
+            ->withoutGlobalScopes()
             ->select('slug')
             ->where('slug', str($newSlug)->slug())
             ->first())
