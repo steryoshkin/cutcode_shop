@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Telegram\Exceptions;
+namespace Services\Telegram\Exceptions;
 
 use Exception;
 

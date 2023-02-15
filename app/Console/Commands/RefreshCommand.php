@@ -22,10 +22,7 @@ class RefreshCommand extends Command
         }
 
         Storage::deleteDirectory('images/products');
-
-        if(!Storage::directoryExists('images/products')) {
-            Storage::createDirectory('images/products');
-        }
+        Storage::deleteDirectory('images/brands');
 
         $this->call('migrate:fresh',[
             '--seed' => true

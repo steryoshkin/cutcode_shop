@@ -22,7 +22,7 @@ trait HasSlug
         });
     }
 
-    public static function slugFrom(): string
+    protected static function slugFrom(): string
     {
         return 'title';
     }

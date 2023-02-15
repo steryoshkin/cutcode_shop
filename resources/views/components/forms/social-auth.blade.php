@@ -8,6 +8,7 @@
         'null' => '',
     ],
 ])
+
 <ul class="space-y-3 my-2">
     <li>
         <a href="{{ $url }}" class="relative flex items-center h-14 px-12 rounded-lg border border-[#A07BF0] bg-white/20 hover:bg-white/20 active:bg-white/10 active:translate-y-0.5">

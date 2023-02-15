@@ -5,7 +5,7 @@
 @section('content')
     <x-forms.auth-forms
         title="Регистрация"
-        action="{{ route('store') }}"
+        action="{{ route('register.handle') }}"
         method="POST"
     >
         @csrf
@@ -75,7 +75,7 @@
         <x-slot:socialAuth>
             <x-forms.social-auth
                 name="GitHub"
-                url="{{ route('socialite.github') }}"
+                url="{{ route('socialite.redirect', ['driver' => 'github']) }}"
                 icon='github'>
             </x-forms.social-auth>
         </x-slot:socialAuth>

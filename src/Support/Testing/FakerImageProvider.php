@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Faker;
+namespace Support\Testing;
 
 use Faker\Provider\Base;
 use Illuminate\Support\Facades\Http;
@@ -8,8 +8,12 @@ use Illuminate\Support\Facades\Storage;
 
 final class FakerImageProvider extends Base
 {
-    public function picsum(string $dir = '', int $w = 500, int $h = 500, string $format = 'jpg'): string
+    public function picsum(string $fixDir, string $dir = '', int $w = 500, int $h = 500, string $format = 'jpg'): string
     {
+        if(!Storage::exists($dir)) {
+            Storage::makeDirectory($dir);
+        }
+
         $url = 'https://picsum.photos' . '/' . $w . '/' . $h . '.' . $format . '?random=' . rand(1, 9);
 
         $fileName = md5(uniqid(empty($_SERVER['SERVER_ADDR']) ? '' : $_SERVER['SERVER_ADDR'], true));
@@ -25,8 +29,7 @@ final class FakerImageProvider extends Base
                     $filepath,
                     $file->body()
                 );
-//                dump($filepath);
-//                return '/storage/app/public/' . $filepath;
+                dump($filepath);
                 return $filepath;
             }
         } else {
