@@ -30,7 +30,7 @@ final class FakerImageProvider extends Base
                     $file->body()
                 );
                 dump($filepath);
-                return $filepath;
+                return 'storage' . DIRECTORY_SEPARATOR . $filepath;
             }
         } else {
             return false;
